@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/lesson_picture"
+               android:src="@mipmap/ic_launcher"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp" android:layout_marginStart="15dp"
+        android:id="@+id/lesson_conversation_name"
+        android:layout_alignParentTop="true" android:layout_toRightOf="@+id/lesson_picture"
+        android:layout_toEndOf="@+id/lesson_picture"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/creator_name"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/lesson_conversation_name"
+        android:layout_alignStart="@+id/lesson_conversation_name"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lesson_conversation_number"
+        android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/creator_name"
+        android:layout_toEndOf="@+id/creator_name" android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"/>
+
+</RelativeLayout>

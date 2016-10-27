@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">MyApp</string>
+    <array name="about">
+        <item name="agure">会话组</item>
+        <item name="classNumber">班课编号</item>
+    </array>
+
+    <array name="people">
+        <item name="teacher">教师</item>
+        <item name="student">学生</item>
+    </array>
+
+    <string name="dialogTitle">
+        课程编号
+    </string>
+    <string name="talkTitle">
+        会话编号
+    </string>
+
+    <drawable name="registerWindowBackground">#e5f2f2</drawable>
+    <drawable name="welcomeColor">#11d1be</drawable>
+
+    <string name="userlogin">用户登录</string>
+
+    <array name="person">
+        <item>教师</item>
+        <item>学生</item>
+    </array>
+    <string name="title_activity_main1">Main1Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_by_allen">MainActivityByAllen</string>
+    <string name="title_activity_function">FunctionActivity</string>
+    <string name="title_activity_business_fragment">BusinessFragmentActivity</string>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.example.asus.myapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-sdk android:minSdkVersion="21"/>
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon2"
+        android:label="匿名课堂"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".UserActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Login"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name="com.example.asus.app.UI.Login1"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".RegisterTeacher"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Commit"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ClassnumberActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".UserTeacherActivity"/>
+        <activity
+            android:name=".CommitTeacher"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".TalkActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Welcome"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"/>
+        <service
+            android:name=".MyService2"
+            android:enabled="true"/>
+
+        <activity
+            android:name="com.example.asus.app.UI.FunctionActivity"
+            android:exported="true"/>
+        <activity android:name="com.example.asus.app.UI.CreateAndJoinActivity"
+                  android:exported="true"/>
+    </application>
+
+</manifest>

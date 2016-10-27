@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:fitsSystemWindows="true">
+
+    <ProgressBar
+        android:id="@+id/prog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:indeterminate="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
+        <FrameLayout
+            android:id="@+id/logo_layout"
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/icon2"
+                android:layout_gravity="center"
+                android:layout_width="200px"
+                android:layout_height="200px" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/username_layout"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/logo_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtuser"
+                android:layout_marginLeft="37px"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="用户名" />
+
+            <ImageView
+                android:src="@drawable/loginuser"
+                android:layout_width="50px"
+                android:layout_height="90px"
+                android:layout_gravity="left|bottom" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/password_layout"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/username_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtpsd"
+                android:layout_marginLeft="37px"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="密码"
+                android:password="true" />
+
+            <ImageView
+                android:src="@drawable/lock2"
+                android:layout_width="40px"
+                android:layout_height="90px"
+                android:layout_gravity="left|bottom" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/login_layout"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/password_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/login"
+                android:layout_gravity="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#2c81dd"
+                android:text="登录"
+                android:textColor="#FFFFFF"/>
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/register_layout"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/login_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/register"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#2c81dd"
+                android:layout_gravity="center_horizontal"
+                android:text="注册"
+                android:textColor="#FFFFFF"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/choose_layout"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/register_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <Spinner
+                android:id="@+id/people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+        </FrameLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
