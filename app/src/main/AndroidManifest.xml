@@ -66,7 +66,10 @@
         <activity
             android:name="com.example.asus.app.UI.FunctionActivity"
             android:exported="true"/>
-        <activity android:name="com.example.asus.app.UI.CreateAndJoinActivity"
+        <activity
+            android:name="com.example.asus.app.UI.CreateAndJoinActivity"
+            android:exported="true"/>
+        <activity android:name="com.example.asus.app.UI.SendDanmuActivity"
                   android:exported="true"/>
     </application>
 
