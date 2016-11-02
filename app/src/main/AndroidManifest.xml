@@ -69,8 +69,14 @@
         <activity
             android:name="com.example.asus.app.UI.CreateAndJoinActivity"
             android:exported="true"/>
-        <activity android:name="com.example.asus.app.UI.SendDanmuActivity"
-                  android:exported="true"/>
+        <activity
+            android:name="com.example.asus.app.UI.SendDanmuActivity"
+            android:exported="true"/>
+        <activity
+            android:name="com.example.asus.app.UI.Login2Activity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
     </application>
 
 </manifest>

@@ -56,7 +56,7 @@ public class FunctionActivity extends AppCompatActivity
 
     public static final String USER_NAME = "userName";
 
-    private String mUserName = "测试";
+    private String mUserName;
     private List<LessonOrConversation> mLessonOrConversationList = new ArrayList<>();
     private LessonOrConversionAdapter mLessonOrConversationListArrayAdapter;
     /////////////////////////////////////////////////////////////////
@@ -64,6 +64,8 @@ public class FunctionActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_function);
+
+        getUserInformation();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

@@ -1,5 +1,6 @@
 package com.example.asus.app.UI;
 
+import android.app.TimePickerDialog;
 import android.content.pm.ProviderInfo;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
 
 import com.example.asus.KMP.KMP;
 import com.example.asus.app.UI.SendDanmuActivityHelpClass.Thread.ReceiveMessage;
@@ -20,7 +22,9 @@ import com.example.asus.myapp.MyMessage;
 import com.example.asus.myapp.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,5 +95,23 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
             }
         }
         return haveSensitive;
+    }
+
+    private Calendar showTimePickerDialog() {
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        new TimePickerDialog(SendDanmuActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+            }
+        }, hour, minute, true).show();
+        return calendar;
     }
 }
