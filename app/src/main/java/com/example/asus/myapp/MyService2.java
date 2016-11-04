@@ -46,7 +46,7 @@ public class MyService2 extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        final Intent intent2 = intent;
+        /*final Intent intent2 = intent;
 
         intent2.setAction(Commit.ACTION_UPDATEUI2);
         this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -119,7 +119,7 @@ public class MyService2 extends Service {
                     }
                 }
             }
-        }).start();
+        }).start();*/
 
         return super.onStartCommand(intent, flags, startId);
     }
