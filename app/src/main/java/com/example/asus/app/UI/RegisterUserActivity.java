@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.asus.app.UI.FunctionActivity.USER_NAME;
+import static com.example.asus.app.UI.FunctionActivity.USER_NUMBER;
 import static com.example.asus.app.UI.Login2Activity.PEOPLE;
 
 public class RegisterUserActivity extends AppCompatActivity {
@@ -188,6 +189,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                     if (succeedRegister) {
                         Intent intent = new Intent(RegisterUserActivity.this, FunctionActivity.class);
                         intent.putExtra(USER_NAME, name);
+                        intent.putExtra(USER_NUMBER, number);
+
                         startActivity(intent);
                         finish();
                     } else {

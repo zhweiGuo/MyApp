@@ -76,6 +76,7 @@ public class SendMessage extends Thread {
 
                 Log.i("STATUS------>", String.valueOf(jsonObject.getBoolean("status")));
                 Log.i("/////发送弹幕的Thread", groupNumber);
+                Log.i("/////发送弹幕的Thread名字", userName);
 //                MyMessage message = new MyMessage(messageContent, MyMessage.SEND,
 //                        date, "", userName);
                 MyMessage myMessage = new MyMessage(MyMessage.SEND, messageContent, dateString, "", userName);

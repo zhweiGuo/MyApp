@@ -32,6 +32,7 @@ import java.util.Locale;
 import static com.example.asus.app.UI.FunctionActivity.COURSE_NAME;
 import static com.example.asus.app.UI.FunctionActivity.LESSON_NUMBER;
 import static com.example.asus.app.UI.FunctionActivity.ISLESSON;
+import static com.example.asus.app.UI.FunctionActivity.USER_NAME;
 
 public class SendDanmuActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -140,5 +141,7 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
         misLesson = data.getBoolean(ISLESSON);
         mLessonNumber = String.valueOf(data.getInt(LESSON_NUMBER));
         mtoolbar.setTitle(data.getString(COURSE_NAME));
+        mUserName = data.getString(USER_NAME);
+        Log.i("////发送弹幕的活动", mUserName);
     }
 }

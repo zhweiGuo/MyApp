@@ -57,8 +57,10 @@ public class FunctionActivity extends AppCompatActivity
     public static final String ISLESSON = "isTalk";
 
     public static final String USER_NAME = "userName";
+    public static final String USER_NUMBER = "userNumber";
 
     private String mUserName = "";
+    private String mUserNumber = "";
     private List<LessonOrConversation> mLessonOrConversationList = new ArrayList<>();
     private LessonOrConversionAdapter mLessonOrConversationListArrayAdapter;
 
@@ -100,6 +102,8 @@ public class FunctionActivity extends AppCompatActivity
 
         TextView userNameTextView = (TextView) headerLayout.findViewById(R.id.nav_header_textView_title1);
         if (userNameTextView != null) userNameTextView.setText(mUserName);
+        TextView userNumberTextView = (TextView) headerLayout.findViewById(R.id.nav_header_textView_title2);
+        if (userNameTextView != null) userNumberTextView.setText(mUserNumber);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -223,6 +227,7 @@ public class FunctionActivity extends AppCompatActivity
 
     private void getUserInformation() {
         mUserName = getIntent().getExtras().getString(USER_NAME);
+        mUserNumber = getIntent().getExtras().getString(USER_NUMBER);
     }
 
     private void addmLessonOrConversationList(String name, String creator, int num, boolean isLesson) {
@@ -243,6 +248,7 @@ public class FunctionActivity extends AppCompatActivity
         intent.putExtra(ISLESSON, lessonOrConversation.isLesson());
         intent.putExtra(LESSON_NUMBER, lessonOrConversation.getNumber());
         intent.putExtra(COURSE_NAME, lessonOrConversation.getName());
+        intent.putExtra(USER_NAME,mUserName);
         startActivity(intent);
         Log.i("///////FunctionActivity", String.valueOf(lessonOrConversation.getNumber()));
     }
