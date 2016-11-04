@@ -70,18 +70,16 @@ public class SendMessage extends Thread {
             HttpResponse response = new DefaultHttpClient().execute(request);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 String str = EntityUtils.toString(response.getEntity());
-                Log.i("//////发送弹幕线程", str);
                 System.out.println("JSON1-------->" + str);
                 JSONObject jsonObject = new JSONObject(str);
                 System.out.println("STATUS------------------->" + jsonObject.getBoolean("status"));
 
-                Date date= new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
-                        .parse(dateString);
-                MyMessage message = new MyMessage(messageContent, MyMessage.SEND,
-                        date, "", userName);
-
-                currentActivity.mMessageList.add(message);
-                Log.i("//////发送弹幕线程", String.valueOf(currentActivity.mMessageList.size()));
+                Log.i("STATUS------>", String.valueOf(jsonObject.getBoolean("status")));
+                Log.i("/////发送弹幕的Thread", groupNumber);
+//                MyMessage message = new MyMessage(messageContent, MyMessage.SEND,
+//                        date, "", userName);
+                MyMessage myMessage = new MyMessage(MyMessage.SEND, messageContent, dateString, "", userName);
+                currentActivity.mMessageList.add(myMessage);
                 currentActivity.updateListViewHandler.sendEmptyMessage(UPDATE_MESSAGE_LIST);
             }
 

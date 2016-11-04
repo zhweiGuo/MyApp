@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -52,7 +53,7 @@ public class FunctionActivity extends AppCompatActivity
     public static final String ACTIVITY_TYPE = "activity_type";
     public static final String LESSON_NUMBER = "groupId";
     public static final String COURSE_NAME = "courseName";
-//    public static final String ADDTALK = "userName";
+    //    public static final String ADDTALK = "userName";
     public static final String ISLESSON = "isTalk";
 
     public static final String USER_NAME = "userName";
@@ -60,6 +61,7 @@ public class FunctionActivity extends AppCompatActivity
     private String mUserName = "";
     private List<LessonOrConversation> mLessonOrConversationList = new ArrayList<>();
     private LessonOrConversionAdapter mLessonOrConversationListArrayAdapter;
+
     /////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +104,7 @@ public class FunctionActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 //将侧边栏顶部延伸至status bar
                 drawer.setFitsSystemWindows(true);
                 //将主页面顶部延伸至status bar;虽默认为false,但经测试,DrawerLayout需显示设置
@@ -125,37 +127,37 @@ public class FunctionActivity extends AppCompatActivity
 
             switch (requestCode) {
                 case JOINCOURSE:
-                     name = bundle.getString(COURSENAME);
-                     creator = bundle.getString(TEACHERNAME);
-                     number = Integer.parseInt(bundle.getString(AddClass.CLASSNUMBER));
+                    name = bundle.getString(COURSENAME);
+                    creator = bundle.getString(TEACHERNAME);
+                    number = Integer.parseInt(bundle.getString(AddClass.CLASSNUMBER));
                     isLesson = true;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 case JOINCONVERSATION:
                     name = bundle.getString(GROUPNAME);
-                     creator = bundle.getString(USERNAME);
+                    creator = bundle.getString(USERNAME);
                     number = Integer.parseInt(bundle.getString(AddTalk.TALKNUMBER));
                     isLesson = false;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 case CREATECOURSE:
                     name = bundle.getString(CREATECOURSENAME);
                     creator = bundle.getString(CLASSTEACHERNAME);
                     number = bundle.getInt(CLASSNUMBER);
                     isLesson = true;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 case CREATECONVERSATION:
                     name = bundle.getString(CREATETALKNAME);
                     creator = bundle.getString(TALKTEACHERNAME);
                     number = bundle.getInt(TALKNUMBER);
                     isLesson = false;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
             }
-            addmLessonOrConversationList(name,creator,number, isLesson);
+            addmLessonOrConversationList(name, creator, number, isLesson);
         }
     }
 
@@ -218,8 +220,9 @@ public class FunctionActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void getUserInformation() {
-         mUserName = getIntent().getExtras().getString(USER_NAME);
+        mUserName = getIntent().getExtras().getString(USER_NAME);
     }
 
     private void addmLessonOrConversationList(String name, String creator, int num, boolean isLesson) {
@@ -237,9 +240,10 @@ public class FunctionActivity extends AppCompatActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LessonOrConversation lessonOrConversation = mLessonOrConversationList.get(position);
         Intent intent = new Intent(this, SendDanmuActivity.class);
-        intent.putExtra(ISLESSON,lessonOrConversation.isLesson());
+        intent.putExtra(ISLESSON, lessonOrConversation.isLesson());
         intent.putExtra(LESSON_NUMBER, lessonOrConversation.getNumber());
         intent.putExtra(COURSE_NAME, lessonOrConversation.getName());
         startActivity(intent);
+        Log.i("///////FunctionActivity", String.valueOf(lessonOrConversation.getNumber()));
     }
 }

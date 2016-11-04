@@ -75,7 +75,6 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_MESSAGE_LIST:
-                    Log.e("/////handler//////", "handler执行");
                     mMessageListAdapter.notifyDataSetChanged();
             }
         }
@@ -83,7 +82,7 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        Log.e("/////发送弹幕的活动", "点击的send按钮");
+        Log.i("/////发送弹幕的活动", "点击的send按钮");
         String content = mSendContentEditText.getText().toString();
         if ((!TextUtils.isEmpty(content)) && (!haveSensitiveWords(content))) {
 
@@ -95,7 +94,6 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
                     .format(new Date());
             SendMessage sendMessage = new SendMessage(content, dateString, this,
                     mUserName, mLessonNumber);
-            Log.e("/////发送弹幕的活动", "线程开始");
             sendMessage.start();
         }
     }
