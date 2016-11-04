@@ -1,6 +1,7 @@
 package com.example.asus.app.UI.SendDanmuActivityHelpClass.Thread;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.example.asus.app.UI.SendDanmuActivity;
 import com.example.asus.myapp.Commit;
@@ -69,6 +70,7 @@ public class SendMessage extends Thread {
             HttpResponse response = new DefaultHttpClient().execute(request);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 String str = EntityUtils.toString(response.getEntity());
+                Log.i("//////发送弹幕线程", str);
                 System.out.println("JSON1-------->" + str);
                 JSONObject jsonObject = new JSONObject(str);
                 System.out.println("STATUS------------------->" + jsonObject.getBoolean("status"));
@@ -79,6 +81,7 @@ public class SendMessage extends Thread {
                         date, "", userName);
 
                 currentActivity.mMessageList.add(message);
+                Log.i("//////发送弹幕线程", String.valueOf(currentActivity.mMessageList.size()));
                 currentActivity.updateListViewHandler.sendEmptyMessage(UPDATE_MESSAGE_LIST);
             }
 

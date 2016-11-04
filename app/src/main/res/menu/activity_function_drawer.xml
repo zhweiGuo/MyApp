@@ -20,20 +20,12 @@
             <!--android:title="Tools"/>-->
     <!--</group>-->
 
-    <item android:title="课程">
+    <item android:title="教师功能">
         <menu>
             <item
                 android:id="@+id/create_course"
                 android:icon="@drawable/ic_menu_share"
                 android:title="创建课程"/>
-            <item
-                android:id="@+id/join_course"
-                android:icon="@drawable/ic_menu_send"
-                android:title="加入课程"/>
-        </menu>
-    </item>
-    <item android:title="会话组">
-        <menu>
             <item
                 android:id="@+id/create_conversation"
                 android:icon="@drawable/ic_menu_share"
@@ -42,6 +34,15 @@
                 android:id="@+id/join_conversation"
                 android:icon="@drawable/ic_menu_send"
                 android:title="加入会话"/>
+
+        </menu>
+    </item>
+    <item android:title="学生功能">
+        <menu>
+            <item
+                android:id="@+id/join_course"
+                android:icon="@drawable/ic_menu_send"
+                android:title="加入课程"/>
         </menu>
     </item>
 

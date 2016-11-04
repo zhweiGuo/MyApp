@@ -36,7 +36,7 @@ public class CreateAndJoinActivity extends AppCompatActivity implements View.OnC
 
         mEditText = (EditText) findViewById(R.id.join_conversation_edit);
         mButton = (Button) findViewById(R.id.join_conversation_btn);
-        mTitle = (TextView) findViewById(R.id.title);
+        mTitle = (TextView) findViewById(R.id.toolbar_danmu);
         mButton.setOnClickListener(this);
 
         initLayout();

@@ -12,6 +12,7 @@ public class LessonOrConversation {
     private String creator;
     private int number;
     private int resourceId;
+    private boolean isLesson;
 
     public boolean isLesson() {
         return isLesson;
@@ -29,7 +30,6 @@ public class LessonOrConversation {
         this.isLesson = isLesson;
     }
 
-    private boolean isLesson;
 
     public String getName() {
         return name;
