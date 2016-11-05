@@ -4,6 +4,8 @@ import com.example.asus.KMP.KMP;
 import com.example.asus.myapp.DBOperate.DBContext;
 import com.example.asus.myapp.DBOperate.DatabanseOperate;
 
+import com.example.asus.myapp.SocketFunction.SocketFunction;
+import com.example.asus.myapp.SocketFunction.SocketThread;
 import com.example.asus.myapp._Commit.*;
 
 
@@ -38,7 +40,9 @@ public class Commit extends AppCompatActivity {
             "奶", "奶奶的", "大爷", "畜生", "扑街",
             "猪", "傻", "妈的智障", "妈","混蛋","你爹","你妹","爸"};
 
-    public static final String ACTION_UPDATEUI2 = "action.updateUI";
+    private final static String URL = "115.28.80.81";
+    private final static int PRO = 12345;
+    private SocketThread socketThread = null;
 
 
     private Toolbar toolbar = null;
@@ -102,7 +106,7 @@ public class Commit extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.commit);
 
@@ -172,8 +176,14 @@ public class Commit extends AppCompatActivity {
 
                                 case 0:
                                     //发送弹幕
-                                    SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
-                                    sentProblem.start();
+                                    //SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
+                                    //sentProblem.start();
+
+                                    socketThread = new SocketThread();
+                                    socketThread.setInfo(info);
+                                    socketThread.setURL(URL);
+                                    socketThread.setPro(PRO);
+                                    socketThread.start();
 
                                     MyMessage msg = new MyMessage(info, MyMessage.SEND, new Date(), "", "");
                                     msgList.add(msg);
