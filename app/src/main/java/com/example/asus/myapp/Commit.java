@@ -17,6 +17,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.text.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,10 +47,10 @@ public class Commit extends AppCompatActivity {
             "妈的", "操你妈", "日", "日你妹", "问候你祖宗", "去死", "去死吧", "脑子有病", "猪脑",
             "奶", "奶奶的", "大爷", "畜生", "扑街",
             "猪", "傻", "妈的智障", "妈","混蛋","你爹","你妹","爸"};
+    //"115.28.80.81" 12345"192.168.56.1"
+    private final static String URL = "192.168.56.1";
+    private final static int PRO = 8888;
 
-    private final static String URL = "115.28.80.81";
-    private final static int PRO = 12345;
-    private SocketThread socketThread = null;
 
 
     private Toolbar toolbar = null;
@@ -138,8 +146,6 @@ public class Commit extends AppCompatActivity {
         msgListView.setAdapter(msgAdapter);
 
 
-
-
         this.commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,14 +182,16 @@ public class Commit extends AppCompatActivity {
 
                                 case 0:
                                     //发送弹幕
+
+                                    Text text = new Text();
+                                    text.start();
                                     //SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
                                     //sentProblem.start();
-
-                                    socketThread = new SocketThread();
-                                    socketThread.setInfo(info);
+                                    /*SocketThread socketThread = new SocketThread(handler);
                                     socketThread.setURL(URL);
                                     socketThread.setPro(PRO);
-                                    socketThread.start();
+                                    socketThread.setInfo(info);
+                                    socketThread.start();*/
 
                                     MyMessage msg = new MyMessage(info, MyMessage.SEND, new Date(), "", "");
                                     msgList.add(msg);
@@ -236,9 +244,6 @@ public class Commit extends AppCompatActivity {
 
 
         });
-
-
-
 
 
         //显示聊天记录
@@ -363,5 +368,38 @@ public class Commit extends AppCompatActivity {
         return this.discuss;
     }
 
+
+
+    //测试线程
+    private class Text extends Thread {
+        @Override
+        public void run() {
+            try{
+
+                Socket socket = new Socket(URL,PRO);
+                OutputStream out = socket.getOutputStream();
+                out.write("hello".getBytes());
+                out.flush();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                System.out.println("发送");
+                String buff = "";
+
+                buff = bufferedReader.readLine();
+                System.out.println("接收+" + bufferedReader.readLine());
+
+                System.out.println("服务器接收消息" + buff);
+
+                bufferedReader.close();
+                out.close();
+                socket.close();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+    }
 
 }
