@@ -24,15 +24,15 @@
         <menu>
             <item
                 android:id="@+id/create_course"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@android:drawable/ic_menu_my_calendar"
                 android:title="创建课程"/>
             <item
                 android:id="@+id/create_conversation"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@android:drawable/sym_action_chat"
                 android:title="创建会话"/>
             <item
                 android:id="@+id/join_conversation"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@android:drawable/stat_notify_more"
                 android:title="加入会话"/>
 
         </menu>
@@ -41,7 +41,7 @@
         <menu>
             <item
                 android:id="@+id/join_course"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@android:drawable/star_big_off"
                 android:title="加入课程"/>
         </menu>
     </item>

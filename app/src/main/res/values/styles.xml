@@ -8,7 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ColorTranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="ColorTranslucentTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@android:color/holo_blue_light</item>
+    </style>
 
     <style name="CustomWindowTitleBackground">
         <item name="android:background">#e3cd6d</item>
