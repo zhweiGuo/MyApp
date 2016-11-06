@@ -19,51 +19,53 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.URL;
 
 public class SocketFunction {
-    private Socket socket = null;
-    private BufferedWriter out = null;
-    private BufferedReader input = null;
-
-
+    //private Socket socket = null;
     private OutputStream output= null;
-
-
+    private BufferedReader bufferedReader = null;
     private String sendInfo = null;
     private String reciveInfo = null;
-    public void LinkServer(String URL, int pro){
-        String buff = null;
+    private SocketRecive socketRecive = null;
+
+
+    //接收数据
+    public void LinkServer(Socket socket){
+
         try{
 
-            socket = new Socket(URL,pro);
-
-            //获取输入流和输出流
+            //获取输出流
 
             output = socket.getOutputStream();
-            output.write("hello".getBytes());
+            output.write(getSendInfo().getBytes("UTF-8"));
             output.flush();
-            //out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            //out.write(sendInfo + "\n");
-            //out.flush();    //刷新缓存区，发送数据
 
             System.out.println("Function + " + getSendInfo());
 
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            buff = input.readLine();
-
-            System.out.println("服务器发回来的消息" + buff);
-            setReciveInfo(buff);
-
-
             output.close();
 
-            out.close();
-            input.close();
-            socket.close();
+            //socket.close();
         }catch(Exception e){
             e.printStackTrace();
         }
     }
+
+    //接收消息
+    public void ReciveSocket(Socket socket){
+        try {
+
+            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String buff = "";
+            buff = bufferedReader.readLine();
+            socketRecive.setMsg(buff);
+
+            bufferedReader.close();
+       }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     //设置发送的消息
     public void setSendInfo(String sendInfo){
         this.sendInfo = sendInfo;

@@ -5,6 +5,7 @@ import com.example.asus.myapp.DBOperate.DBContext;
 import com.example.asus.myapp.DBOperate.DatabanseOperate;
 
 import com.example.asus.myapp.SocketFunction.SocketFunction;
+import com.example.asus.myapp.SocketFunction.SocketRecive;
 import com.example.asus.myapp.SocketFunction.SocketThread;
 import com.example.asus.myapp._Commit.*;
 
@@ -33,6 +34,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.text.*;
 import java.util.ArrayList;
@@ -48,8 +51,8 @@ public class Commit extends AppCompatActivity {
             "奶", "奶奶的", "大爷", "畜生", "扑街",
             "猪", "傻", "妈的智障", "妈","混蛋","你爹","你妹","爸"};
     //"115.28.80.81" 12345"192.168.56.1"
-    private final static String URL = "192.168.56.1";
-    private final static int PRO = 8888;
+    private final static String URL = "115.28.80.81";
+    private final static int PRO = 12345;
 
 
 
@@ -111,7 +114,8 @@ public class Commit extends AppCompatActivity {
         }
     };
 
-
+    private SocketFunction socketFunction = new SocketFunction();
+    SocketThread socketThread = new SocketThread(URL,PRO);
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -183,15 +187,14 @@ public class Commit extends AppCompatActivity {
                                 case 0:
                                     //发送弹幕
 
-                                    Text text = new Text();
-                                    text.start();
+                                    //Text text = new Text();
+                                    //text.start();
                                     //SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
                                     //sentProblem.start();
-                                    /*SocketThread socketThread = new SocketThread(handler);
-                                    socketThread.setURL(URL);
-                                    socketThread.setPro(PRO);
+
+
                                     socketThread.setInfo(info);
-                                    socketThread.start();*/
+                                    socketThread.start();
 
                                     MyMessage msg = new MyMessage(info, MyMessage.SEND, new Date(), "", "");
                                     msgList.add(msg);
@@ -245,6 +248,9 @@ public class Commit extends AppCompatActivity {
 
         });
 
+
+        //套接字接收消息
+        SocketRecive socketRecive = new SocketRecive(this.socketFunction,socketThread.getSocket());
 
         //显示聊天记录
         switch (getIsWho()) {
@@ -377,11 +383,12 @@ public class Commit extends AppCompatActivity {
             try{
 
                 Socket socket = new Socket(URL,PRO);
+                socket.setSoTimeout(5000);
                 OutputStream out = socket.getOutputStream();
-                out.write("hello".getBytes());
+                out.write("hello".getBytes("utf-8"));
                 out.flush();
 
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                /*BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 System.out.println("发送");
                 String buff = "";
@@ -391,7 +398,7 @@ public class Commit extends AppCompatActivity {
 
                 System.out.println("服务器接收消息" + buff);
 
-                bufferedReader.close();
+                bufferedReader.close();*/
                 out.close();
                 socket.close();
 

@@ -5,28 +5,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import java.net.Socket;
+
 /**
  * Created by asus on 2016/11/5.
  */
 public class SocketThread extends Thread{
     private String info = null;
     private SocketFunction socketFunction = null;
-    private String URL;
-    private int pro;
-    private Handler handler = null;
+    private Socket socket = null;
+    private String URL = null;
+    private int pro ;
     @Override
     public void run() {
-
-        this.socketFunction = new SocketFunction();
-
+        socketFunction = new SocketFunction();
         System.out.println("SocketThread++++++" + info);
         socketFunction.setSendInfo(info);
-        socketFunction.LinkServer(URL,pro);
+        socketFunction.LinkServer(socket);
 
-        Message msg = new Message();
-        Bundle data = new Bundle();
-        data.putString("key",socketFunction.getReciveInfo());
-        handler.sendMessage(msg);
     }
 
 
@@ -36,17 +32,20 @@ public class SocketThread extends Thread{
     public String getInfo(){
         return this.info;
     }
-    public void setURL(String URL){
+
+    public SocketThread(String URL ,int pro){
+
         this.URL = URL;
-    }
-    public String getURL(){
-        return this.URL;
-    }
-    public void setPro(int pro){
         this.pro = pro;
+        try {
+            this.socket = new Socket(URL,pro);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
-    public SocketThread(Handler handler){
-        this.handler = handler;
+    public Socket getSocket(){
+        return this.socket;
     }
 }
