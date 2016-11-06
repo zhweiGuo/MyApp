@@ -5,8 +5,6 @@ import com.example.asus.myapp.DBOperate.DBContext;
 import com.example.asus.myapp.DBOperate.DatabanseOperate;
 
 import com.example.asus.myapp.SocketFunction.SocketFunction;
-import com.example.asus.myapp.SocketFunction.SocketRecive;
-import com.example.asus.myapp.SocketFunction.SocketThread;
 import com.example.asus.myapp._Commit.*;
 
 
@@ -18,7 +16,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,14 +25,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.text.*;
 import java.util.ArrayList;
@@ -110,12 +100,15 @@ public class Commit extends AppCompatActivity {
                     dbContext1.doStractegy(0);
 
                     break;
+
+
+                case 2:
+                    Toast.makeText(Commit.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
 
-    private SocketFunction socketFunction = new SocketFunction();
-    SocketThread socketThread = new SocketThread(URL,PRO);
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -150,6 +143,12 @@ public class Commit extends AppCompatActivity {
         msgListView.setAdapter(msgAdapter);
 
 
+
+        //启动子线程来接收数据
+        final SocketFunction socketFunction = new SocketFunction(handler,URL,PRO);
+        socketFunction.start();
+
+        //发送弹幕，Socket编程
         this.commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,10 +190,11 @@ public class Commit extends AppCompatActivity {
                                     //text.start();
                                     //SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
                                     //sentProblem.start();
-
-
-                                    socketThread.setInfo(info);
-                                    socketThread.start();
+                                    Message message = new Message();
+                                    message.what = 0x123;
+                                    message.obj = info;
+                                    socketFunction.rehandler.sendMessage(message);
+                                    //socketFunction.setSendInfo(info);
 
                                     MyMessage msg = new MyMessage(info, MyMessage.SEND, new Date(), "", "");
                                     msgList.add(msg);
@@ -249,8 +249,6 @@ public class Commit extends AppCompatActivity {
         });
 
 
-        //套接字接收消息
-        SocketRecive socketRecive = new SocketRecive(this.socketFunction,socketThread.getSocket());
 
         //显示聊天记录
         switch (getIsWho()) {

@@ -5,6 +5,8 @@ package com.example.asus.myapp.SocketFunction;
  */
 
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 
 import com.example.asus.myapp.Commit;
 
@@ -21,47 +23,83 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.URL;
 
-public class SocketFunction {
-    //private Socket socket = null;
+public class SocketFunction extends Thread{
+    private Socket socket = null;
     private OutputStream output= null;
-    private BufferedReader bufferedReader = null;
+    private BufferedReader buff = null;
     private String sendInfo = null;
-    private String reciveInfo = null;
-    private SocketRecive socketRecive = null;
+    public Handler rehandler = null;
+    private Handler handler = null;
+    private String URL = null;
+    private int pro ;
 
-
-    //接收数据
-    public void LinkServer(Socket socket){
-
-        try{
-
-            //获取输出流
-
-            output = socket.getOutputStream();
-            output.write(getSendInfo().getBytes("UTF-8"));
-            output.flush();
-
-            System.out.println("Function + " + getSendInfo());
-
-            output.close();
-
-            //socket.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    public SocketFunction(Handler handler,String URL ,int pro){
+        this.handler = handler;
+        this.URL = URL;
+        this.pro = pro;
     }
 
-    //接收消息
-    public void ReciveSocket(Socket socket){
-        try {
+    @Override
+    public void run() {
+        try{
 
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String buff = "";
-            buff = bufferedReader.readLine();
-            socketRecive.setMsg(buff);
+            this.socket = new Socket(URL,pro);
+            this.socket.setSoTimeout(5000);
+            //获取输出流
+            output = socket.getOutputStream();
+            buff = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            bufferedReader.close();
-       }catch (Exception e){
+            //启动另一条线程去接受Socket数据
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    String context = null;
+
+                    try{
+                        while((context = buff.readLine()) != null){
+                            System.out.println("不断接受的消息" + context);
+                            Message msg = new Message();
+                            msg.what = 2;
+                            msg.obj = context;
+                            handler.sendMessage(msg);
+                        }
+
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+
+            Looper.prepare();
+            rehandler = new Handler(){
+
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == 0x123) {
+                        //向服务器发送数据
+                        try {
+                            System.out.println(msg.obj.toString());
+                            output.write((msg.obj.toString()+"\r\n").getBytes("UTF-8"));
+                            output.flush();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+
+            Looper.loop();
+
+
+
+            //System.out.println("Function + " + getSendInfo());
+            buff.close();
+            output.close();
+            socket.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -74,11 +112,4 @@ public class SocketFunction {
         return this.sendInfo;
     }
 
-    //设置接收的消息
-    public void setReciveInfo(String reciveInfo){
-        this.reciveInfo = reciveInfo;
-    }
-    public String getReciveInfo(){
-        return this.reciveInfo;
-    }
 }
