@@ -33,7 +33,7 @@ import static com.example.asus.app.UI.SendDanmuActivity.UPDATE_MESSAGE_LIST;
  */
 
 public class ReceiveMessage extends Thread {
-    private final String url = "http://115.28.80.81/app/check.php";
+    private final String url = "115.28.80.81/app/index.php?model=User&method=login";
     private String dateString;
     private SendDanmuActivity currentActivity;
     private String userName;
@@ -54,7 +54,7 @@ public class ReceiveMessage extends Thread {
 
             while (true) {
 
-                Thread.sleep(3000);
+                Thread.sleep(1000);
                 HttpPost request = new HttpPost(url);
 
                 List<NameValuePair> params = new ArrayList<>();

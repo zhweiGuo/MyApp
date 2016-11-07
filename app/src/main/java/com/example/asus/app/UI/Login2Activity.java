@@ -53,6 +53,9 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
     private TextView mRegisterTextView;
     private RadioGroup mRadioGroup;
 
+
+    private SendDanmuActivity sendAC = new SendDanmuActivity();
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -147,6 +150,8 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
                 }
                 Log.e("////////线程/////////", String.valueOf(canLogin));
                 if (canLogin!=null) {
+                    sendAC.setSHA1(canLogin);
+                    sendAC.isWho = Integer.parseInt(people);
                     Intent intent = new Intent(Login2Activity.this, FunctionActivity.class);
                     intent.putExtra(USER_NAME, name);
                     startActivity(intent);
