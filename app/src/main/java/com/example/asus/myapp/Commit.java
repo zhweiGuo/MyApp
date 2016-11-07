@@ -190,6 +190,7 @@ public class Commit extends AppCompatActivity {
                                     //text.start();
                                     //SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
                                     //sentProblem.start();
+
                                     Message message = new Message();
                                     message.what = 0x123;
                                     message.obj = info;
@@ -256,8 +257,8 @@ public class Commit extends AppCompatActivity {
             case 0:
                 //发送10秒轮询消息,获取收到的弹幕记录
 
-                Receive receive = new Receive(date,userActivity.getUsername(),simpleDateFormat,date,handler);
-                receive.start();
+                //Receive receive = new Receive(date,userActivity.getUsername(),simpleDateFormat,date,handler);
+                //receive.start();
                 MyDBHelp myDBHelp = new MyDBHelp(Commit.this, "record", null, 1);
                 SQLiteDatabase db = myDBHelp.getReadableDatabase();
                 Cursor cursor = db.query("record", new String[]{"author", "flag", "_nameId", "_name"}, null, null, null, null, null);
@@ -291,8 +292,8 @@ public class Commit extends AppCompatActivity {
             case 1:
                 //发送10秒轮询消息,获取收到的弹幕记录
 
-                receive = new Receive(date,userTeacherActivity.getUsername(),simpleDateFormat,date,handler);
-                receive.start();
+                //receive = new Receive(date,userTeacherActivity.getUsername(),simpleDateFormat,date,handler);
+                //receive.start();
                 //查询数据库
                 MyDBHelp myDBHelp2 = new MyDBHelp(Commit.this, "record", null, 1);
                 SQLiteDatabase db2 = myDBHelp2.getReadableDatabase();
@@ -374,37 +375,5 @@ public class Commit extends AppCompatActivity {
 
 
 
-    //测试线程
-    private class Text extends Thread {
-        @Override
-        public void run() {
-            try{
-
-                Socket socket = new Socket(URL,PRO);
-                socket.setSoTimeout(5000);
-                OutputStream out = socket.getOutputStream();
-                out.write("hello".getBytes("utf-8"));
-                out.flush();
-
-                /*BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                System.out.println("发送");
-                String buff = "";
-
-                buff = bufferedReader.readLine();
-                System.out.println("接收+" + bufferedReader.readLine());
-
-                System.out.println("服务器接收消息" + buff);
-
-                bufferedReader.close();*/
-                out.close();
-                socket.close();
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-    }
 
 }
