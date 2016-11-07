@@ -53,6 +53,9 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
     private TextView mRegisterTextView;
     private RadioGroup mRadioGroup;
 
+
+    private SendDanmuActivity sendAC = new SendDanmuActivity();
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -114,7 +117,7 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
     }
 
     private class PostThread extends Thread {
-        public static final String url = "http://115.28.80.81/app/check.php";
+        public static final String url = "http://115.28.80.81/app/index.php?model=User&method=login";
         private String name;
         private String pass;
         private String people;
@@ -126,13 +129,13 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         public void run() {
-            boolean canLogin = true;
+            String canLogin = null;
             try {
                 HttpPost request = new HttpPost(url);
 
                 List<NameValuePair> params = new ArrayList<>();
                 params.add(new BasicNameValuePair("action","sign"));
-                params.add(new BasicNameValuePair("name", name));
+                params.add(new BasicNameValuePair("username", name));
                 params.add(new BasicNameValuePair("password", pass));
                 params.add(new BasicNameValuePair("flag",people));
                 request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
@@ -141,12 +144,14 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
                 if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                     String str = EntityUtils.toString(response.getEntity());
                     JSONObject jsonObject = new JSONObject(str);
-                    canLogin = jsonObject.getBoolean("status");
+                    canLogin = jsonObject.getString("key");
                     Log.e("////////线程/////////", str);
 
                 }
                 Log.e("////////线程/////////", String.valueOf(canLogin));
-                if (canLogin == true) {
+                if (canLogin!=null) {
+                    sendAC.setSHA1(canLogin);
+                    sendAC.isWho = Integer.parseInt(people);
                     Intent intent = new Intent(Login2Activity.this, FunctionActivity.class);
                     intent.putExtra(USER_NAME, name);
                     startActivity(intent);

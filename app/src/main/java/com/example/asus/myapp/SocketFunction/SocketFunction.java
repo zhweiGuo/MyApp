@@ -60,7 +60,7 @@ public class SocketFunction extends Thread{
                         while((context = buff.readLine()) != null){
                             System.out.println("不断接受的消息" + context);
                             Message msg = new Message();
-                            msg.what = 2;
+                            msg.what = 1;
                             msg.obj = context;
                             handler.sendMessage(msg);
                         }
