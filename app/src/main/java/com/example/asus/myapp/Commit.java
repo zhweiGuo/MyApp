@@ -4,6 +4,7 @@ import com.example.asus.KMP.KMP;
 import com.example.asus.myapp.DBOperate.DBContext;
 import com.example.asus.myapp.DBOperate.DatabanseOperate;
 
+import com.example.asus.myapp.SocketFunction.SocketFunction;
 import com.example.asus.myapp._Commit.*;
 
 
@@ -24,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.OutputStream;
+import java.net.Socket;
 import java.text.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +40,10 @@ public class Commit extends AppCompatActivity {
             "妈的", "操你妈", "日", "日你妹", "问候你祖宗", "去死", "去死吧", "脑子有病", "猪脑",
             "奶", "奶奶的", "大爷", "畜生", "扑街",
             "猪", "傻", "妈的智障", "妈","混蛋","你爹","你妹","爸"};
+    //"115.28.80.81" 12345"192.168.56.1"
+    private final static String URL = "115.28.80.81";
+    private final static int PRO = 12345;
 
-    public static final String ACTION_UPDATEUI2 = "action.updateUI";
 
 
     private Toolbar toolbar = null;
@@ -95,14 +100,18 @@ public class Commit extends AppCompatActivity {
                     dbContext1.doStractegy(0);
 
                     break;
+
+
+                case 2:
+                    Toast.makeText(Commit.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.commit);
 
@@ -135,7 +144,11 @@ public class Commit extends AppCompatActivity {
 
 
 
+        //启动子线程来接收数据
+        final SocketFunction socketFunction = new SocketFunction(handler,URL,PRO);
+        socketFunction.start();
 
+        //发送弹幕，Socket编程
         this.commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,8 +185,17 @@ public class Commit extends AppCompatActivity {
 
                                 case 0:
                                     //发送弹幕
-                                    SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
-                                    sentProblem.start();
+
+                                    //Text text = new Text();
+                                    //text.start();
+                                    //SentProblem sentProblem = new SentProblem(info, unix,getGroupId(),userActivity.getUsername());
+                                    //sentProblem.start();
+
+                                    Message message = new Message();
+                                    message.what = 0x123;
+                                    message.obj = info;
+                                    socketFunction.rehandler.sendMessage(message);
+                                    //socketFunction.setSendInfo(info);
 
                                     MyMessage msg = new MyMessage(info, MyMessage.SEND, new Date(), "", "");
                                     msgList.add(msg);
@@ -229,16 +251,14 @@ public class Commit extends AppCompatActivity {
 
 
 
-
-
         //显示聊天记录
         switch (getIsWho()) {
 
             case 0:
                 //发送10秒轮询消息,获取收到的弹幕记录
 
-                Receive receive = new Receive(date,userActivity.getUsername(),simpleDateFormat,date,handler);
-                receive.start();
+                //Receive receive = new Receive(date,userActivity.getUsername(),simpleDateFormat,date,handler);
+                //receive.start();
                 MyDBHelp myDBHelp = new MyDBHelp(Commit.this, "record", null, 1);
                 SQLiteDatabase db = myDBHelp.getReadableDatabase();
                 Cursor cursor = db.query("record", new String[]{"author", "flag", "_nameId", "_name"}, null, null, null, null, null);
@@ -272,8 +292,8 @@ public class Commit extends AppCompatActivity {
             case 1:
                 //发送10秒轮询消息,获取收到的弹幕记录
 
-                receive = new Receive(date,userTeacherActivity.getUsername(),simpleDateFormat,date,handler);
-                receive.start();
+                //receive = new Receive(date,userTeacherActivity.getUsername(),simpleDateFormat,date,handler);
+                //receive.start();
                 //查询数据库
                 MyDBHelp myDBHelp2 = new MyDBHelp(Commit.this, "record", null, 1);
                 SQLiteDatabase db2 = myDBHelp2.getReadableDatabase();
@@ -352,6 +372,8 @@ public class Commit extends AppCompatActivity {
     public String getDiscuss() {
         return this.discuss;
     }
+
+
 
 
 }
