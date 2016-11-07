@@ -81,8 +81,9 @@ public class MessageAdapter extends ArrayAdapter<MyMessage> {
             viewHolder.dateMsgRight.setVisibility(View.GONE);
             viewHolder.textView2.setVisibility(View.GONE);
             viewHolder.textView.setVisibility(View.VISIBLE);
-            viewHolder.dateMsgLeft.setText(new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
-                    .format(msg.getMsgDate()));
+//            viewHolder.dateMsgLeft.setText(new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
+//                    .format(msg.getMsgDate()));
+            viewHolder.dateMsgLeft.setText(msg.getDateString());
 
             viewHolder.textView.setText(msg.getStudentId_left());
         } else if (msg.getType() == MyMessage.SEND) {
@@ -92,8 +93,10 @@ public class MessageAdapter extends ArrayAdapter<MyMessage> {
             viewHolder.rightHead.setVisibility(View.VISIBLE);
             viewHolder.rightMsg.setText(msg.getContent());
             viewHolder.dateMsgLeft.setVisibility(View.GONE);
-            viewHolder.dateMsgRight.setText(new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
-                    .format(msg.getMsgDate()));
+//            viewHolder.dateMsgRight.setText(new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
+//                    .format(msg.getMsgDate()));
+            viewHolder.dateMsgRight.setText(msg.getDateString());
+
 
             viewHolder.textView.setVisibility(View.GONE);
             viewHolder.textView2.setVisibility(View.VISIBLE);

@@ -12,6 +12,16 @@ public class MyMessage {
     private int type;
     private String content;
     private Date msgDate;
+    private String dateString;
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
     private String studentId_left = null;
     private String studentId_right = null;
 
@@ -20,6 +30,14 @@ public class MyMessage {
         this.type = type;
         this.msgDate = date;
 
+        this.studentId_left = studentId_left;
+        this.studentId_right = studentId_right;
+    }
+
+    public MyMessage(int type, String content, String dateString, String studentId_left, String studentId_right) {
+        this.type = type;
+        this.content = content;
+        this.dateString = dateString;
         this.studentId_left = studentId_left;
         this.studentId_right = studentId_right;
     }
@@ -59,6 +77,6 @@ public class MyMessage {
         this.studentId_right = studentId_right;
     }
     public String getStudentId_right(){
-        return this.studentId_left;
+        return this.studentId_right;
     }
 }

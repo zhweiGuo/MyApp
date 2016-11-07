@@ -1,13 +1,13 @@
 package com.example.asus.app.UI;
 
 import android.app.TimePickerDialog;
-import android.content.pm.ProviderInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,15 +22,21 @@ import com.example.asus.myapp.MyMessage;
 import com.example.asus.myapp.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.asus.app.UI.FunctionActivity.COURSE_NAME;
+import static com.example.asus.app.UI.FunctionActivity.LESSON_NUMBER;
+import static com.example.asus.app.UI.FunctionActivity.ISLESSON;
+import static com.example.asus.app.UI.FunctionActivity.USER_NAME;
+
 public class SendDanmuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public List<MyMessage> mMessageList;
+    public List<MyMessage> mMessageList = new ArrayList<>();
     private MessageAdapter mMessageListAdapter;
     private Toolbar mtoolbar;
     private Button mSendButton;
@@ -39,6 +45,7 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
     private String mLessonNumber;
     private String mUserName;
     private ReceiveMessage mReceiveMessage;
+    private boolean misLesson = false;
     public static final int UPDATE_MESSAGE_LIST = 0;
 
     @Override
@@ -51,6 +58,10 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
         mSendContentEditText = (EditText) findViewById(R.id.send_content_editText);
         mMessageListView = (ListView) findViewById(R.id.msg_list_view);
         mMessageListAdapter = new MessageAdapter(this, R.layout.message_item1, mMessageList);
+
+        initActivityLayout();
+        mSendButton.setOnClickListener(this);
+        mMessageListView.setAdapter(mMessageListAdapter);
 
         //开启接受弹幕信息的线程
         String dateString = new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
@@ -72,8 +83,14 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        Log.i("/////发送弹幕的活动", "点击的send按钮");
         String content = mSendContentEditText.getText().toString();
-        if (!TextUtils.isEmpty(content) && !haveSensitiveWords(content)) {
+        if ((!TextUtils.isEmpty(content)) && (!haveSensitiveWords(content))) {
+
+            if (! misLesson) {
+                showTimePickerDialog();
+            }
+
             String dateString = new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
                     .format(new Date());
             SendMessage sendMessage = new SendMessage(content, dateString, this,
@@ -89,7 +106,7 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
             char[] ss = content.toCharArray();
             char[] tt = t.toCharArray();
             int result = KMP.KMP_Index(ss, tt); //result == -1表示没有敏感词
-            if (result == -1) {
+            if (result != -1) {
                 haveSensitive = true;
                 break;
             }
@@ -97,6 +114,10 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
         return haveSensitive;
     }
 
+    /**
+     * 如果是发送会话组的通知，调用此方法显示时间选择会话框
+     * @return Calendar
+     */
     private Calendar showTimePickerDialog() {
         final Calendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -113,5 +134,14 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
             }
         }, hour, minute, true).show();
         return calendar;
+    }
+
+    private void initActivityLayout() {
+        Bundle data = getIntent().getExtras();
+        misLesson = data.getBoolean(ISLESSON);
+        mLessonNumber = String.valueOf(data.getInt(LESSON_NUMBER));
+        mtoolbar.setTitle(data.getString(COURSE_NAME));
+        mUserName = data.getString(USER_NAME);
+        Log.i("////发送弹幕的活动", mUserName);
     }
 }

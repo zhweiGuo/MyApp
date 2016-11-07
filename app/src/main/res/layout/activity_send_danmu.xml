@@ -2,6 +2,7 @@
 <LinearLayout
     android:id="@+id/activity_send_danmu"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,16 +14,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary">
+        android:background="@android:color/holo_blue_light"
+        app:navigationIcon="?attr/actionModeCloseDrawable"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/toolbar_danmu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="发弹幕"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -31,27 +34,34 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="#0000" />
+        android:divider="#0000"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_gravity="bottom"
+        android:background="#e0e3e9"
+        android:padding="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
         <EditText
             android:id="@+id/send_content_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:hint="输入你的问题" />
+            android:layout_weight="5"
+            android:hint="输入你的问题"/>
 
         <Button
             android:id="@+id/send_button"
             android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="#d647d3"
+            android:background="@android:color/holo_blue_light"
             android:text="发送"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"/>
 
     </LinearLayout>

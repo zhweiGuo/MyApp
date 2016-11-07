@@ -1,2 +1,144 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="ColorTranslucentTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@android:color/holo_blue_light</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">#e3cd6d</item>
+    </style>
+
+    <style name="test" parent="android:Theme.Light">
+        <item name="android:windowTitleSize">60dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
+    </style>
+
+
+    <style name="mydialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--设置无边框-->
+        <item name="android:windowIsFloating">true</item><!--设置是否悬浮activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+    <style name="mytalkdialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--设置无边框-->
+        <item name="android:windowIsFloating">true</item><!--设置是否悬浮activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="mycreatClass" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--设置无边框-->
+        <item name="android:windowIsFloating">true</item><!--设置是否悬浮activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="mycreatTalk" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--设置无边框-->
+        <item name="android:windowIsFloating">true</item><!--设置是否悬浮activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="refactor_pass" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--设置无边框-->
+        <item name="android:windowIsFloating">true</item><!--设置是否悬浮activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/dialogBackground</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- 最外层样式 -->
+    <style name="wrap_layout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:padding">1px</item>
+        <item name="android:background">@drawable/bg_layout_shape</item>
+
+    </style>
+
+    <!-- 共用层样式 -->
+    <style name="base_layout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+    <!-- 上圆角样式 -->
+    <style name="top_layout" parent="base_layout">
+        <item name="android:background">@drawable/top_layout_selector</item>
+    </style>
+
+
+    <!--无圆角样式  -->
+    <style name="mid_layout" parent="base_layout">
+        <item name="android:background">@drawable/mid_layout_selector</item>
+    </style>
+
+    <!-- 下圆角样式 -->
+    <style name="bottom_layout" parent="base_layout">
+        <item name="android:background">@drawable/bottom_layout_selector</item>
+    </style>
+
+    <!-- 全圆角样式 -->
+    <style name="single_layout" parent="base_layout">
+        <item name="android:background">@drawable/single_layout_selector</item>
+    </style>
+
+
+    <!-- textview样式 -->
+    <style name="usertext">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/text_clo</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+
+    <!-- 文本右边箭头样式 -->
+    <style name="img_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/setting_arrow</item>
+
+    </style>
+
+
+    <!-- view分割线样式 -->
+    <style name="bg_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/border_clo</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
 </resources>

@@ -44,6 +44,7 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
     public static final String STUDENT = "0";
     public static final String TEACHER = "1";
     public static final int SHOW_ERROR_INFORMATION = 1;
+    public static final String PEOPLE = "people";
     private String mPeople = TEACHER;
 
     private EditText mUserNameEditText;
@@ -88,6 +89,7 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
             }
         });
         mLoginBtn.setOnClickListener(this);
+        mRegisterTextView.setOnClickListener(this);
     }
 
     @Override
@@ -105,7 +107,9 @@ public class Login2Activity extends AppCompatActivity implements View.OnClickLis
             }
 
             if (v.getId() == R.id.register_text_view) {
-
+                Intent intent = new Intent(Login2Activity.this, RegisterUserActivity.class);
+                intent.putExtra(PEOPLE, mPeople);
+                startActivity(intent);
             }
     }
 

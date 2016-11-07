@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.asus.app.UI.Login2Activity;
+
 public class Welcome extends AppCompatActivity {
 
 
@@ -37,9 +39,10 @@ public class Welcome extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
 
-                    Intent intent = new Intent(Welcome.this,MainActivity.class);
+//                    Intent intent = new Intent(Welcome.this,MainActivity.class);
+                    Intent intent = new Intent(Welcome.this,Login2Activity.class);
                     startActivity(intent);
                     finish();
 

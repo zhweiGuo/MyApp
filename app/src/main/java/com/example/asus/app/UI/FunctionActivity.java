@@ -2,10 +2,10 @@ package com.example.asus.app.UI;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContentResolverCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,9 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.app.UI.CreateAndJoinActivityHelperClass.Thread.AddClass;
@@ -42,7 +43,7 @@ import static com.example.asus.app.UI.CreateAndJoinActivityHelperClass.Thread.Cr
 import static com.example.asus.app.UI.CreateAndJoinActivityHelperClass.Thread.CreateTalk.TALKTEACHERNAME;
 
 public class FunctionActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
 
     /////////////////////////////////////////////////////////////////
     public static final int CREATECOURSE = 0;
@@ -50,15 +51,19 @@ public class FunctionActivity extends AppCompatActivity
     public static final int CREATECONVERSATION = 2;
     public static final int JOINCONVERSATION = 3;
     public static final String ACTIVITY_TYPE = "activity_type";
-//    public static final String ADDCLASS = "";
-//    public static final String ADDTALK = "userName";
-//    public static final String CREATECLASS = "userName";
+    public static final String LESSON_NUMBER = "groupId";
+    public static final String COURSE_NAME = "courseName";
+    //    public static final String ADDTALK = "userName";
+    public static final String ISLESSON = "isTalk";
 
     public static final String USER_NAME = "userName";
+    public static final String USER_NUMBER = "userNumber";
 
-    private String mUserName;
+    private String mUserName = "";
+    private String mUserNumber = "";
     private List<LessonOrConversation> mLessonOrConversationList = new ArrayList<>();
     private LessonOrConversionAdapter mLessonOrConversationListArrayAdapter;
+
     /////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +90,31 @@ public class FunctionActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //通过java代码动态加载headerLayout布局
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_function);
         navigationView.setNavigationItemSelectedListener(this);
+
         mLessonOrConversationListArrayAdapter =
                 new LessonOrConversionAdapter(this, R.layout.lession_item, mLessonOrConversationList);
         ListView lessonConversionListVew = (ListView) findViewById(R.id.lesson_conversation_list_view);
         lessonConversionListVew.setAdapter(mLessonOrConversationListArrayAdapter);
+        lessonConversionListVew.setOnItemClickListener(this);
+
+        TextView userNameTextView = (TextView) headerLayout.findViewById(R.id.nav_header_textView_title1);
+        if (userNameTextView != null) userNameTextView.setText(mUserName);
+        TextView userNumberTextView = (TextView) headerLayout.findViewById(R.id.nav_header_textView_title2);
+        if (userNameTextView != null) userNumberTextView.setText(mUserNumber);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+//            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+//            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//                //将侧边栏顶部延伸至status bar
+//                drawer.setFitsSystemWindows(true);
+//                //将主页面顶部延伸至status bar;虽默认为false,但经测试,DrawerLayout需显示设置
+//                drawer.setClipToPadding(false);
+//            }
+//        }
 
     }
 
@@ -106,37 +131,37 @@ public class FunctionActivity extends AppCompatActivity
 
             switch (requestCode) {
                 case JOINCOURSE:
-                     name = bundle.getString(COURSENAME);
-                     creator = bundle.getString(TEACHERNAME);
-                     number = Integer.parseInt(bundle.getString(AddClass.CLASSNUMBER));
+                    name = bundle.getString(COURSENAME);
+                    creator = bundle.getString(TEACHERNAME);
+                    number = Integer.parseInt(bundle.getString(AddClass.CLASSNUMBER));
                     isLesson = true;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 case JOINCONVERSATION:
                     name = bundle.getString(GROUPNAME);
-                     creator = bundle.getString(USERNAME);
+                    creator = bundle.getString(USERNAME);
                     number = Integer.parseInt(bundle.getString(AddTalk.TALKNUMBER));
                     isLesson = false;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 case CREATECOURSE:
                     name = bundle.getString(CREATECOURSENAME);
                     creator = bundle.getString(CLASSTEACHERNAME);
                     number = bundle.getInt(CLASSNUMBER);
                     isLesson = true;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 case CREATECONVERSATION:
                     name = bundle.getString(CREATETALKNAME);
                     creator = bundle.getString(TALKTEACHERNAME);
                     number = bundle.getInt(TALKNUMBER);
                     isLesson = false;
-                    Toast.makeText(this, name+creator+number, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, name + creator + number, Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
             }
-            addmLessonOrConversationList(name,creator,number, isLesson);
+            addmLessonOrConversationList(name, creator, number, isLesson);
         }
     }
 
@@ -199,9 +224,12 @@ public class FunctionActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void getUserInformation() {
-         mUserName = getIntent().getExtras().getString(USER_NAME);
+        mUserName = getIntent().getExtras().getString(USER_NAME);
+        mUserNumber = getIntent().getExtras().getString(USER_NUMBER);
     }
+
     private void addmLessonOrConversationList(String name, String creator, int num, boolean isLesson) {
         LessonOrConversation lessonOrConversation =
                 new LessonOrConversation(name, creator, num, R.mipmap.ic_launcher, isLesson);
@@ -211,5 +239,17 @@ public class FunctionActivity extends AppCompatActivity
 
     private void testData() {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        LessonOrConversation lessonOrConversation = mLessonOrConversationList.get(position);
+        Intent intent = new Intent(this, SendDanmuActivity.class);
+        intent.putExtra(ISLESSON, lessonOrConversation.isLesson());
+        intent.putExtra(LESSON_NUMBER, lessonOrConversation.getNumber());
+        intent.putExtra(COURSE_NAME, lessonOrConversation.getName());
+        intent.putExtra(USER_NAME,mUserName);
+        startActivity(intent);
+        Log.i("///////FunctionActivity", String.valueOf(lessonOrConversation.getNumber()));
     }
 }

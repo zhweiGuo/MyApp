@@ -1,6 +1,7 @@
 package com.example.asus.app.UI.SendDanmuActivityHelpClass.Thread;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.example.asus.app.UI.SendDanmuActivity;
 import com.example.asus.myapp.Commit;
@@ -73,12 +74,13 @@ public class SendMessage extends Thread {
                 JSONObject jsonObject = new JSONObject(str);
                 System.out.println("STATUS------------------->" + jsonObject.getBoolean("status"));
 
-                Date date= new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
-                        .parse(dateString);
-                MyMessage message = new MyMessage(messageContent, MyMessage.SEND,
-                        date, "", userName);
-
-                currentActivity.mMessageList.add(message);
+                Log.i("STATUS------>", String.valueOf(jsonObject.getBoolean("status")));
+                Log.i("/////发送弹幕的Thread", groupNumber);
+                Log.i("/////发送弹幕的Thread名字", userName);
+//                MyMessage message = new MyMessage(messageContent, MyMessage.SEND,
+//                        date, "", userName);
+                MyMessage myMessage = new MyMessage(MyMessage.SEND, messageContent, dateString, "", userName);
+                currentActivity.mMessageList.add(myMessage);
                 currentActivity.updateListViewHandler.sendEmptyMessage(UPDATE_MESSAGE_LIST);
             }
 
