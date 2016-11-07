@@ -58,7 +58,7 @@ public class ReceiveMessage extends Thread {
                 HttpPost request = new HttpPost(url);
 
                 List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("action", "commit"));
+                //params.add(new BasicNameValuePair("action", "commit"));
                 params.add(new BasicNameValuePair("userName", userName));
                 params.add(new BasicNameValuePair("discuss", ""));
                 params.add(new BasicNameValuePair("teacherName", "1"));

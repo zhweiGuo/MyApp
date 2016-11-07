@@ -47,6 +47,7 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
     private ReceiveMessage mReceiveMessage;
     private boolean misLesson = false;
     public static final int UPDATE_MESSAGE_LIST = 0;
+    public static final int UPDATE_MESSAGE_LIST_RECIVE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,15 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
             switch (msg.what) {
                 case UPDATE_MESSAGE_LIST:
                     mMessageListAdapter.notifyDataSetChanged();
+                case UPDATE_MESSAGE_LIST_RECIVE :
+
+                    MyMessage myMessage = new MyMessage(MyMessage.RECEIVE, msg.obj.toString(),
+                            new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
+                            .format(new Date()), mUserName,"");
+                    mMessageList.add(myMessage);
+                    updateListViewHandler.sendEmptyMessage(UPDATE_MESSAGE_LIST);
+
+                    break;
             }
         }
     };
@@ -93,9 +103,12 @@ public class SendDanmuActivity extends AppCompatActivity implements View.OnClick
 
             String dateString = new SimpleDateFormat("MM-dd EEE HH:mm", new Locale("ZH", "CN"))
                     .format(new Date());
-            SendMessage sendMessage = new SendMessage(content, dateString, this,
+            /*SendMessage sendMessage = new SendMessage(content, dateString, this,
                     mUserName, mLessonNumber);
-            sendMessage.start();
+            sendMessage.start();*/
+            MyMessage myMessage = new MyMessage(MyMessage.SEND, content, dateString, "", mUserName);
+            mMessageList.add(myMessage);
+            updateListViewHandler.sendEmptyMessage(UPDATE_MESSAGE_LIST);
         }
     }
 
